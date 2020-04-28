@@ -22,6 +22,7 @@ void setup() {
   // Setup MH-Z19
   mh_z19_serial.begin(9600);
   mh_z19.begin(mh_z19_serial);
+  mh_z19.autoCalibration(false);
 
   // Initialize BME280
   bool initialized = bme280.begin(0x76);
