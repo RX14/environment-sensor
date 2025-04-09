@@ -6,6 +6,7 @@ Adafruit_BME280 bme280;
 
 SoftwareSerial mh_z19_serial(16, 17);
 MHZ19 mh_z19;
+float temperature, pressure, humidity;
 
 void setup() {
   // Setup host serial
@@ -40,17 +41,25 @@ void setup() {
       Adafruit_BME280::FILTER_OFF);
 }
 
+void update(float &state, float next) {
+    if (!isnan(next))
+        state = next;
+}
+
 void loop() {
   bme280.takeForcedMeasurement();
 
   Serial.print("{\"temperature\": ");
-  Serial.print(bme280.readTemperature());
+  update(temperature, bme280.readTemperature());
+  Serial.print(temperature);
 
   Serial.print(", \"pressure\": ");
-  Serial.print(bme280.readPressure());
+  update(pressure, bme280.readPressure());
+  Serial.print(pressure);
 
   Serial.print(", \"humidity\": ");
-  Serial.print(bme280.readHumidity());
+  update(humidity, bme280.readHumidity());
+  Serial.print(humidity);
 
   Serial.print(", \"co2\": ");
   Serial.print(mh_z19.getCO2());
