@@ -1,0 +1,4 @@
+== Environment sensor
+
+To flash and see output, `platformio run -t upload -t monitor`.
+To just flash, `platform run -t upload`.
